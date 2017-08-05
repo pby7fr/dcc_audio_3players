@@ -44,7 +44,41 @@ void AudioPlayerClass::SetIsNight(bool isNight)
 	_softSerialPlayer->listen();
 	_dfPlayer.disableLoop();
 	_isPlayerPlaying = false;
-	Loop();
+	_timer = millis();
+	Transition();
+}
+
+void AudioPlayerClass::ArduinoLoop()
+{
+	if (!_isTransition)
+		return;
+	//Serial.println(millis() - _timer);
+	
+	if (millis() - _timer > 10000)
+	{
+		_isTransition = false;
+		Serial.print("AudioPlayerClass transition end:");
+		Serial.println(!_isNight);
+		_softSerialPlayer->listen();
+		_dfPlayer.disableLoop();
+		_isPlayerPlaying = false;		
+		Loop();
+
+	}
+	
+}
+
+void AudioPlayerClass::Transition()
+{
+	_isTransition = true;
+	if (!_isPlayerPlaying)
+	{
+		_isPlayerPlaying = true;
+		if (_isNight)
+			_dfPlayer.loop(2);
+		else
+			_dfPlayer.loop(4);
+	}
 }
 
 void AudioPlayerClass::Loop()
@@ -53,7 +87,7 @@ void AudioPlayerClass::Loop()
 	{
 		_isPlayerPlaying = true;
 		if (_isNight)
-			_dfPlayer.loop(2);
+			_dfPlayer.loop(3);
 		else
 			_dfPlayer.loop(1);
 	}

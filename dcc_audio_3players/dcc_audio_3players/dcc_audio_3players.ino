@@ -219,9 +219,11 @@ void loop() //******************************************************************
 	// from the Arduino loop() function for correct library operation
 	Dcc.process();
 
-	
+	AudioPlayer1.ArduinoLoop();
+	AudioPlayer2.ArduinoLoop();
+		AudioPlayer3.ArduinoLoop();
 
-	if (millis() - timer > 10000) {
+	if (millis() - timer > 30000) {
 		timer = millis();
 		Serial.print("setting isNight to:");		
 		Serial.println(!_isNight);
