@@ -6,6 +6,7 @@
 
 // ******** UNLESS YOU WANT ALL CV'S RESET UPON EVERY POWER UP
 // ******** AFTER THE INITIAL DECODER LOAD REMOVE THE "//" IN THE FOOLOWING LINE!!
+#include "AudioPlayer.h"
 #define DECODER_LOADED
 
 // ******** REMOVE THE "//" IN THE FOOLOWING LINE TO SEND DEBUGGING
@@ -15,9 +16,9 @@
 
 
 // the setup function runs once when you press reset or power the board
-#include <SoftwareSerial.h>
+
 #include <NmraDcc.h>
-#include <DFRobotDFPlayerMini.h>
+
 
 
 NmraDcc Dcc;
@@ -78,93 +79,23 @@ void notifyCVResetFactoryDefault()
 	FactoryDefaultCVIndex = sizeof(FactoryDefaultCVs) / sizeof(CVPair);
 }
 
-SoftwareSerial softSerialPlayer1(10, 11); // RX, TX
-SoftwareSerial softSerialPlayer2(9, 8); // RX, TX
-SoftwareSerial softSerialPlayer3(12, 13); // RX, TX
-//SoftwareSerial softSerialPlayer3(7,6); // RX, TX
-DFRobotDFPlayerMini DfPlayer1;
-DFRobotDFPlayerMini DfPlayer2;
-DFRobotDFPlayerMini DfPlayer3;
+
+
+AudioPlayerClass AudioPlayer1(10, 11); // RX, TX
+AudioPlayerClass AudioPlayer2(9, 8); // RX, TX
+AudioPlayerClass AudioPlayer3(12, 13); // RX, TX
 
 
 bool _isNight = false;
 
-bool _isPlayer1Playing = false;
-bool _isPlayer2Playing = false;
-bool _isPlayer3Playing = false;
 
-bool _player1NeedRestart = false;
-bool _player2NeedRestart = false;
-bool _player3NeedRestart = false;
-
-void Player1Loop()
-{
-	if (!_isPlayer1Playing)
-	{
-		_isPlayer1Playing = true;
-		if (_isNight)
-			DfPlayer1.loop(2);
-		else
-			DfPlayer1.loop(1);
-	}
-}
-
-void Player1Stop()
-{
-	if (_isPlayer1Playing)
-	{
-		_isPlayer1Playing = false;
-		DfPlayer1.stop();
-	}
-}
-
-void Player2Loop()
-{
-	if (!_isPlayer2Playing)
-	{
-		_isPlayer2Playing = true;
-		if (_isNight)
-			DfPlayer2.loop(2);
-		else
-			DfPlayer2.loop(1);
-	}
-}
-
-void Player2Stop()
-{
-	if (_isPlayer2Playing)
-	{
-		_isPlayer2Playing = false;
-		DfPlayer2.stop();
-	}
-}
-
-void Player3Loop()
-{
-	if (!_isPlayer3Playing)
-	{
-		_isPlayer3Playing = true;
-		if (_isNight)
-			DfPlayer3.loop(2);
-		else
-			DfPlayer3.loop(1);
-	}
-}
-
-void Player3Stop()
-{
-	if (_isPlayer3Playing)
-	{
-		_isPlayer3Playing = false;
-		DfPlayer3.stop();
-	}
-}
 
 void setup()
 {
-	softSerialPlayer1.begin(9600);
-	softSerialPlayer2.begin(9600);
-	softSerialPlayer3.begin(9600);
+	AudioPlayer1.Init();
+	AudioPlayer2.Init();
+	AudioPlayer3.Init();
+
 #ifdef DEBUG
 	Serial.begin(115200);
 	Serial.println();
@@ -172,54 +103,20 @@ void setup()
 	Serial.println(F("Initializing DFPlayers ... (May take 3~5 seconds)"));
 #endif
 
-	softSerialPlayer1.listen();
-	if (!DfPlayer1.begin(softSerialPlayer1))
-	{ //Use softwareSerial to communicate with mp3.
-#ifdef DEBUG
-		Serial.println(F("Unable to begin (DFPlayer 1):"));
-		Serial.println(F("1.Please recheck the connection! (DFPlayer 1)"));
-		Serial.println(F("2.Please insert the SD card! (DFPlayer 1)"));
-#endif // DEBUG
-
-		while (true);
-	}
-
-	softSerialPlayer2.listen();
-	if (!DfPlayer2.begin(softSerialPlayer2))
-	{ //Use softwareSerial to communicate with mp3.
-#ifdef DEBUG
-		Serial.println(F("Unable to begin (DFPlayer 2):"));
-		Serial.println(F("1.Please recheck the connection! (DFPlayer 2)"));
-		Serial.println(F("2.Please insert the SD card! (DFPlayer 2)"));
-#endif // DEBUG
-
-		while (true);
-	}
-
-	softSerialPlayer3.listen();
-	if (!DfPlayer3.begin(softSerialPlayer3))
-	{ //Use softwareSerial to communicate with mp3.
-#ifdef DEBUG
-		Serial.println(F("Unable to begin (DFPlayer 3):"));
-		Serial.println(F("1.Please recheck the connection! (DFPlayer 3)"));
-		Serial.println(F("2.Please insert the SD card! (DFPlayer 3)"));
-#endif // DEBUG
-
-		while (true);
-	}
+	
 #ifdef DEBUG
 	Serial.println(F("All DFPlayers Mini are online."));
 #endif // DEBUG
 
 
-	DfPlayer1.volume(15); //Set volume value. From 0 to 30
-	Player1Loop(); //Play the first mp3
+	AudioPlayer1.SetVolume(15); //Set volume value. From 0 to 30
+	AudioPlayer1.Loop(); //Play the first mp3
 
-	DfPlayer2.volume(15); //Set volume value. From 0 to 30
-	Player2Loop(); //Play the first mp3
+	AudioPlayer2.SetVolume(15); //Set volume value. From 0 to 30
+	AudioPlayer2.Loop(); //Play the first mp3
 
-	DfPlayer3.volume(15); //Set volume value. From 0 to 30
-	Player3Loop(); //Play the first mp3
+	AudioPlayer3.SetVolume(15); //Set volume value. From 0 to 30
+	AudioPlayer3.Loop(); //Play the first mp3
 
 
 	// Setup which External Interrupt, the Pin it's associated with that we're using 
@@ -302,10 +199,15 @@ void Func1(bool state)
 		Serial.print(F("Change night state to: "));
 		Serial.println(_isNight);
 #endif
-		_player1NeedRestart = true;
+		/*_player1NeedRestart = true;
 		DfPlayer1.disableLoop();
 		_player2NeedRestart = true;
-		DfPlayer2.disableLoop();
+		DfPlayer2.disableLoop();*/
+
+		AudioPlayer1.SetIsNight(_isNight);
+		AudioPlayer2.SetIsNight(_isNight);
+		AudioPlayer3.SetIsNight(_isNight);
+
 	}
 }
 
@@ -341,65 +243,65 @@ void loop() //******************************************************************
 	}
 #endif
 
-	if (_playerCount == 0)
-	{
-
-		
-		//DfPlayer1.waitAvailable();
-		if (DfPlayer1.available())
-		{
-			/*Serial.print(F("Player 1:"));
-			Serial.println(DfPlayer1.readState());*/
-			//printDetail(DfPlayer1.readType(), DfPlayer1.read());*/
-			if (DfPlayer1.readType() == DFPlayerPlayFinished)
-			{
-#ifdef DEBUG
-				Serial.print(F("Number:"));
-				Serial.print(DfPlayer1.read());
-				Serial.println(F(" Play Finished! (Player 1)"));
-#endif
-				if (_player1NeedRestart)
-				{
-					_player1NeedRestart = false;
-					_isPlayer1Playing = false;
-					Player1Loop();
-				}
-			}
-			_playerCount++;
-		}
-		softSerialPlayer2.listen();
-	}
-	if (_playerCount == 1)
-	{
-		
-		//DfPlayer2.waitAvailable();
-		if (DfPlayer2.available())
-		{
-			/*Serial.print(F("Player 2:"));
-			Serial.println(DfPlayer2.readState());*/
-			//printDetail(DfPlayer2.readType(), DfPlayer2.read());
-			if (DfPlayer2.readType() == DFPlayerPlayFinished)
-			{
-#ifdef DEBUG
-				Serial.print(F("Number:"));
-				Serial.print(DfPlayer2.read());
-				Serial.println(F(" Play Finished! (Player 2)"));
-#endif
-				if (_player2NeedRestart)
-				{
-					_player2NeedRestart = false;
-					_isPlayer2Playing = false;
-					Player2Loop();
-				}
-			}
-			_playerCount++;
-		}
-		softSerialPlayer1.listen();
-	}
-
-	
-	if (_playerCount >= 2)
-		_playerCount = 0;
+//	if (_playerCount == 0)
+//	{
+//
+//		
+//		//DfPlayer1.waitAvailable();
+//		if (DfPlayer1.available())
+//		{
+//			/*Serial.print(F("Player 1:"));
+//			Serial.println(DfPlayer1.readState());*/
+//			//printDetail(DfPlayer1.readType(), DfPlayer1.read());*/
+//			if (DfPlayer1.readType() == DFPlayerPlayFinished)
+//			{
+//#ifdef DEBUG
+//				Serial.print(F("Number:"));
+//				Serial.print(DfPlayer1.read());
+//				Serial.println(F(" Play Finished! (Player 1)"));
+//#endif
+//				if (_player1NeedRestart)
+//				{
+//					_player1NeedRestart = false;
+//					_isPlayer1Playing = false;
+//					Player1Loop();
+//				}
+//			}
+//			_playerCount++;
+//		}
+//		softSerialPlayer2.listen();
+//	}
+//	if (_playerCount == 1)
+//	{
+//		
+//		//DfPlayer2.waitAvailable();
+//		if (DfPlayer2.available())
+//		{
+//			/*Serial.print(F("Player 2:"));
+//			Serial.println(DfPlayer2.readState());*/
+//			//printDetail(DfPlayer2.readType(), DfPlayer2.read());
+//			if (DfPlayer2.readType() == DFPlayerPlayFinished)
+//			{
+//#ifdef DEBUG
+//				Serial.print(F("Number:"));
+//				Serial.print(DfPlayer2.read());
+//				Serial.println(F(" Play Finished! (Player 2)"));
+//#endif
+//				if (_player2NeedRestart)
+//				{
+//					_player2NeedRestart = false;
+//					_isPlayer2Playing = false;
+//					Player2Loop();
+//				}
+//			}
+//			_playerCount++;
+//		}
+//		softSerialPlayer1.listen();
+//	}
+//
+//	
+//	if (_playerCount >= 2)
+//		_playerCount = 0;
 }
 
 
@@ -408,20 +310,18 @@ void loop() //******************************************************************
 
 void Func4(bool state)
 {
-	//softSerialPlayer1.listen();
 	if (state)	
-		Player1Stop();
+		AudioPlayer1.Stop();
 	else
-		Player1Loop();
+		AudioPlayer1.Loop();
 }
 
 void Func5(bool state)
 {
-	//softSerialPlayer2.listen();
 	if (state)
-		Player2Stop();
+		AudioPlayer2.Stop();
 	else
-		Player2Loop();
+		AudioPlayer2.Loop();
 }
 
 
@@ -459,9 +359,9 @@ void Func8(bool state)
 	Serial.println(state ? "1  " : "0  ");*/	
 #endif // DEBUG
 
-	DfPlayer1.volume(state ? Dcc.getCV(CV_SND_MUTE_VOL) : Dcc.getCV(CV_SND_PLAYER1_VOL));
-	DfPlayer2.volume(state ? Dcc.getCV(CV_SND_MUTE_VOL) : Dcc.getCV(CV_SND_PLAYER2_VOL));
-	DfPlayer3.volume(state ? Dcc.getCV(CV_SND_MUTE_VOL) : Dcc.getCV(CV_SND_PLAYER2_VOL));
+	AudioPlayer1.SetVolume(state ? Dcc.getCV(CV_SND_MUTE_VOL) : Dcc.getCV(CV_SND_PLAYER1_VOL));
+	AudioPlayer2.SetVolume(state ? Dcc.getCV(CV_SND_MUTE_VOL) : Dcc.getCV(CV_SND_PLAYER2_VOL));
+	AudioPlayer3.SetVolume(state ? Dcc.getCV(CV_SND_MUTE_VOL) : Dcc.getCV(CV_SND_PLAYER2_VOL));
 }
 
 
