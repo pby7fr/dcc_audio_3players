@@ -9,13 +9,13 @@
 
 AudioPlayerClass::AudioPlayerClass(uint8_t receivePin, uint8_t transmitPin)
 {
-
+	_transitionDuration = 10000;
 	_softSerialPlayer = new SoftwareSerial(receivePin, transmitPin); // RX, TX
-
 }
 
-void AudioPlayerClass::Init()
+void AudioPlayerClass::Init(uint8_t transitionDuration)
 {
+	_transitionDuration = transitionDuration * 1000;
 	_softSerialPlayer->begin(9600);
 
 
@@ -51,10 +51,8 @@ void AudioPlayerClass::SetIsNight(bool isNight)
 void AudioPlayerClass::ArduinoLoop()
 {
 	if (!_isTransition)
-		return;
-	//Serial.println(millis() - _timer);
-	
-	if (millis() - _timer > 10000)
+		return;	
+	if (millis() - _timer > _transitionDuration)
 	{
 		_isTransition = false;
 		Serial.print("AudioPlayerClass transition end:");
@@ -63,7 +61,6 @@ void AudioPlayerClass::ArduinoLoop()
 		_dfPlayer.disableLoop();
 		_isPlayerPlaying = false;		
 		Loop();
-
 	}
 	
 }

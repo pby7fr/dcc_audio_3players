@@ -22,6 +22,7 @@ class AudioPlayerClass
 	 bool _isNight = false;
 	 bool _isTransition = false;
 	 unsigned long _timer = 0;
+	 unsigned long _transitionDuration;
 
 	 void Transition();
 
@@ -29,7 +30,7 @@ class AudioPlayerClass
 	 AudioPlayerClass(uint8_t receivePin, uint8_t transmitPin);
 	 void Loop();
 	 void Stop();
-	 void Init();
+	 void Init(uint8_t transitionDuration);
 	 void SetVolume(uint8_t volume);
 	 void SetIsNight(bool isNight);
 	 void ArduinoLoop();
