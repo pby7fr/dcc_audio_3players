@@ -13,7 +13,7 @@
 
 // ******** REMOVE THE "//" IN THE FOOLOWING LINE TO SEND DEBUGGING
 // ******** INFO TO THE SERIAL MONITOR
-#define DEBUG
+//#define DEBUG
 //#define _DEBUG
 
 
@@ -384,22 +384,6 @@ void    notifyCVChange(uint16_t CV, uint8_t Value)
 	Serial.println(Value);
 #endif // DEBUG
 }
-
-// This function is called by the NmraDcc library when a DCC ACK needs to be sent
-// Calling this function should cause an increased 60ma current drain on the power supply for 6ms to ACK a CV Read 
-
-//const int DccAckPin = 15;
-//void notifyCVAck(void)
-//{
-//#ifdef DEBUG
-//	Serial.println("notifyCVAck");
-//#endif // DEBUG
-//
-//	digitalWrite(DccAckPin, HIGH);
-//	delay(8);
-//	digitalWrite(DccAckPin, LOW);
-//}
-
 
 void notifyDccFunc(uint16_t Addr, DCC_ADDR_TYPE AddrType, FN_GROUP FuncGrp, uint8_t FuncState)
 {
