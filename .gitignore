@@ -2,4 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/dcc_audio_3players/dcc_audio_3players/Release
+/dcc_audio_3players/Release
+/dcc_audio_3players/Debug
+/dcc_audio_3players/_vm
+/.vs
+
