@@ -96,7 +96,7 @@ CVPair FactoryDefaultCVs[] =
 	{CV_SND_PLAYER2_VOL, 15},
 	{CV_SND_PLAYER3_VOL, 15},
 
-	{CV_AUTO_TRANSITION, 0}, // auto transition time in milliseconds, 0 for no auto transition
+	{CV_AUTO_TRANSITION, 0}, // auto transition time in minute, 0 for no auto transition
 	{CV_TRANSITION_DURATION, 10}, // transition sound duration in seconds
 
 	{CV_ALL_USE_TRANSITION, 1}, // 0 for false, true otherwise
@@ -240,7 +240,7 @@ void loop() //******************************************************************
 	AudioPlayer3.ArduinoLoop();
 
 	uint8_t autoTransition = Dcc.getCV(CV_AUTO_TRANSITION);
-	if (autoTransition > 0 && millis() - timer > autoTransition)
+	if (autoTransition > 0 && millis() - timer > autoTransition * 60000)
 	{
 		
 		timer = millis();
