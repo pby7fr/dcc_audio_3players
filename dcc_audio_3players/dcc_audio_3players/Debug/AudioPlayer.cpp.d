@@ -1,5 +1,6 @@
-C:\Users\PBY\AppData\Local\Temp\VMBuilds\dcc_audio_3players\pro_16MHzatmega328\Debug\dcc_audio_3players.cpp.o: \
- C:\Users\PBY\AppData\Local\Temp\VMBuilds\dcc_audio_3players\pro_16MHzatmega328\Debug\dcc_audio_3players.cpp \
+C:\Users\PBY\AppData\Local\Temp\VMBuilds\dcc_audio_3players\pro_16MHzatmega328\Debug\AudioPlayer.cpp.o: \
+ C:\Users\PBY\AppData\Local\Temp\VMBuilds\dcc_audio_3players\pro_16MHzatmega328\Debug\AudioPlayer.cpp \
+ C:\Users\PBY\AppData\Local\Temp\VMBuilds\dcc_audio_3players\pro_16MHzatmega328\Debug\AudioPlayer.h \
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\cores\arduino/Arduino.h \
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\cores\arduino/binary.h \
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\cores\arduino/WCharacter.h \
@@ -12,9 +13,6 @@ C:\Users\PBY\AppData\Local\Temp\VMBuilds\dcc_audio_3players\pro_16MHzatmega328\D
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\cores\arduino/Arduino.h \
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\variants\eightanaloginputs/pins_arduino.h \
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\variants\eightanaloginputs/../standard/pins_arduino.h \
- C:\Users\PBY\AppData\Local\Temp\VMBuilds\dcc_audio_3players\pro_16MHzatmega328\Debug\AudioPlayer.h \
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\libraries\SoftwareSerial\src/SoftwareSerial.h \
  C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\cores\arduino/Stream.h \
- D:\Projects\Toybox\Arduino\libraries\DFRobotDFPlayerMini/DFRobotDFPlayerMini.h \
- D:\Projects\Toybox\Arduino\libraries\NmraDcc/NmraDcc.h \
- C:\Program\ Files\ (x86)\Microsoft\ Visual\ Studio\2017\Professional\Common7\IDE\Extensions\iznu5qi1.uuf\Micro\ Platforms\default\debuggers\VM_DBG/VM_DBG.h
+ D:\Projects\Toybox\Arduino\libraries\DFRobotDFPlayerMini/DFRobotDFPlayerMini.h

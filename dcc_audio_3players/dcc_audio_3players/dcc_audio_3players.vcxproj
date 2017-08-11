@@ -47,7 +47,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\libraries\SoftwareSerial\src;$(ProjectDir)..\..\..\..\libraries\NmraDcc;$(ProjectDir)..\..\..\..\libraries\DFRobotDFPlayerMini;C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\Extensions\ebyfft1h.qcd\Micro Platforms\visualmicro\ide\libraries;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\libraries;$(ProjectDir)..\..\..\..\libraries;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\cores\arduino;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\variants\eightanaloginputs;$(ProjectDir)..\dcc_audio_3players;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\avr\;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.8.1\include;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.2\include;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\libraries\DFRobotDFPlayerMini;$(ProjectDir)..\..\..\..\libraries\NmraDcc;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\libraries\SoftwareSerial\src;C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\Extensions\iznu5qi1.uuf\Micro Platforms\visualmicro\ide\libraries;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\libraries;$(ProjectDir)..\..\..\..\libraries;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\cores\arduino;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.18\variants\eightanaloginputs;$(ProjectDir)..\dcc_audio_3players;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\avr\;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.8.1\include;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.2\include;C:\Users\PBY\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.dcc_audio_3players.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=10801;ARDUINO_AVR_PRO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -77,12 +77,14 @@
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="dcc_audio_3players.ino">
-      <FileType>CppCode</FileType>
-    </None>
+    <None Include="dcc_audio_3players.ino" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioPlayer.h" />
     <ClInclude Include="__vm\.dcc_audio_3players.vsarduino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AudioPlayer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
